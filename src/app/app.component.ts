@@ -1,27 +1,20 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {COURSES} from '../db-data';
-import {Course} from './model/course';
-import {CourseCardComponent} from './course-card/course-card.component';
-import {HighlightedDirective} from './directives/highlighted.directive';
-import {Observable} from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+//import { COURSES } from "../db-data";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
+  courses;
 
+  constructor(private http: HttpClient) {}
 
-  courses = COURSES;
-
-  constructor() {
-
+  ngOnInit(){
+    this.http
+      .get("/api/courses")
+      .subscribe((courses) => (this.courses = courses));
   }
-
-  ngOnInit() {
-  }
-
-
-
 }
